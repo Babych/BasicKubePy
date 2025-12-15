@@ -50,6 +50,10 @@ jobs:
         kubectl apply -f src/deploy/service.yaml
         kubectl apply -f src/deploy/ingress.yaml
     
+    - name: Verify image
+      run: |
+        grep "image:" src/deploy/deployment.yaml
+
     - name: Verify deployed image
       run: |
         kubectl get deployment weather-api \
