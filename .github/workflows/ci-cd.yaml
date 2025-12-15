@@ -39,6 +39,13 @@ jobs:
       run: |
         mkdir -p ~/.kube
         echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > ~/.kube/config
+    
+    - name: Verify deployed image
+      run: |
+        kubectl get deployment weather-api \
+          -n weather-api-ns \
+          -o=jsonpath='{.spec.template.spec.containers[0].image}'
+        echo ""
 
     - name: Set weather-api-ns
       run: | 
