@@ -1,5 +1,5 @@
+from .models import TemperatureResponse
 import requests
-from models import TemperatureResponse
 
 OPEN_METEO_URL = "https://api.open-meteo.com/v1/forecast"
 
