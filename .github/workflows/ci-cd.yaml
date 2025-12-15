@@ -31,13 +31,22 @@ jobs:
         docker push ${{ secrets.DOCKER_USERNAME }}/weather-api:$TAG
         echo "IMAGE_TAG=$TAG" >> $GITHUB_ENV
 
+    - name: Inject image tag into deployment.yaml
+      run: |
+        sed -i "s/__TAG__/${IMAGE_TAG}/g" src/deploy/deployment.yaml
+
     - name: Set kubeconfig
       run: |
         mkdir -p ~/.kube
         echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > ~/.kube/config
 
+    - name: Set weather-api-ns
+      run: | 
+        kubectl create ns weather-api-ns || true
 
     - name: Deploy to Kubernetes
       run: |
         kubectl apply -f src/deploy/deployment.yaml
         kubectl apply -f src/deploy/service.yaml
+        kubectl apply -f ingress.yaml
+
