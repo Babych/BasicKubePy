@@ -48,5 +48,5 @@ jobs:
       run: |
         kubectl apply -f src/deploy/deployment.yaml
         kubectl apply -f src/deploy/service.yaml
-        kubectl apply -f ingress.yaml
+        kubectl apply -f src/deploy/ingress.yaml
 
