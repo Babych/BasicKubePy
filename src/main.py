@@ -10,7 +10,7 @@ def get_temperature(lat: float, lon: float):
         f"?latitude={lat}&longitude={lon}&current=temperature_2m"
     )
 
-    response = requests.get(url, timeout=5)
+    response = requests.get(url, timeout=15)
     response.raise_for_status()
 
     data = response.json()
