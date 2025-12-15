@@ -1,2 +1,2 @@
-# BasicCubePy
+# BasicKubePy
 
