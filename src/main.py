@@ -1,22 +1,12 @@
-from fastapi import FastAPI
-import requests
+from fastapi import FastAPI, HTTPException
+from models import TemperatureResponse
+from weather_service import fetch_temperature
 
-app = FastAPI()
+app = FastAPI()  # <- This is the ASGI app
 
-@app.get("/temperature")
+@app.get("/temperature", response_model=TemperatureResponse)
 def get_temperature(lat: float, lon: float):
-    url = (
-        "https://api.open-meteo.com/v1/forecast"
-        f"?latitude={lat}&longitude={lon}&current=temperature_2m"
-    )
-
-    response = requests.get(url, timeout=15)
-    response.raise_for_status()
-
-    data = response.json()
-    return {
-        "latitude": lat,
-        "longitude": lon,
-        "temperature": data["current"]["temperature_2m"],
-        "unit": data["current_units"]["temperature_2m"]
-    }
+    try:
+        return fetch_temperature(lat, lon)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
