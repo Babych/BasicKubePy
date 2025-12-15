@@ -31,11 +31,11 @@ jobs:
         docker push ${{ secrets.DOCKER_USERNAME }}/weather-api:$TAG
         echo "IMAGE_TAG=$TAG" >> $GITHUB_ENV
 
-    # -------- Kubeconfig --------
     - name: Set kubeconfig
       run: |
         mkdir -p ~/.kube
-        echo "${{ secrets.KUBE_CONFIG }}" > ~/.kube/config
+        echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > ~/.kube/config
+
 
     - name: Deploy to Kubernetes
       run: |
