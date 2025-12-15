@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: weather-api
-          image: yourdockerhub/weather-api:__TAG__
+          image: dbabych/weather-api:__TAG__
           ports:
             - containerPort: 8000
           env:
