@@ -50,4 +50,6 @@ jobs:
       # 7. Deploy all manifests
       - name: Deploy to Kubernetes
         run: |
-          for f in k8s/$IMAGE_NAME/*.y*_
+          kubectl apply -f k8s/weather-api/deployment.yaml
+          kubectl apply -f k8s/weather-api/service.yaml
+          kubectl apply -f k8s/weather-api/ingress.yaml 
